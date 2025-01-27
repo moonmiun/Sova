@@ -45,8 +45,7 @@ Sova/<br>
 ├── README.html&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# This file, containing information and examples. <br>
 ├── README.pdf<br>
 └── tests/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Automatized tests for the package.<br>
-│&nbsp;&nbsp;├── testthat.R<br>
-│&nbsp;&nbsp;└── testthat/<br>
+│&nbsp;&nbsp;└── test_examples.R<br>
 
 ## **Supporting files**
 These files support the main code for Sova. 
@@ -236,7 +235,7 @@ This file contains functions for creating an manipulations objects.
 + `create_ncRNA(...)`: creates an object of class ncRNA by using, as parameters, the same slots required by the class.<br>
   Example:
   ```
-  ncRNA_miRNA <- createProteinCodingGene(
+  ncRNA_miRNA <- create_ncRNA(
     id = "ENSG00000208008",
     symbol = "MIR125A",
     name = "microRNA 125a",
@@ -255,7 +254,7 @@ This file contains functions for creating an manipulations objects.
 + `create_tRNA(...)`: creates an object of class tRNA by using, as parameters, the same slots required by the class.<br>
   Example:
   ```
-  ncRNA_tRNA_Phe <- create_ncRNA(
+  ncRNA_tRNA_Phe <- create_tRNA(
     id = "ENSG00000210049.1",
     name = "Mitochondrial tRNA phenylalanine",
     assembly = "hg38",
@@ -272,7 +271,7 @@ This file contains functions for creating an manipulations objects.
 + `create_rRNA(...)`: creates an object of class rRNA by using, as parameters, the same slots required by the class.<br>
   Example:
   ```
-  18S_rRNA <- create_rRNA(
+  rRNA_18s <- create_rRNA(
     id = "ENSG00000225840",
     symbol = "RNA18SN5",
     name = "RNA, 18S ribosomal pseudogene",
@@ -291,7 +290,7 @@ This file contains functions for creating an manipulations objects.
 + `create_snRNA(...)`: creates an object of class snRNA by using, as parameters, the same slots required by the class.<br>
   Example:
   ```
-  ncRNA_miRNA <- createProteinCodingGene(
+  ncRNA_snRNA <- create_snRNA(
     id = "ENSG00000206652",
     symbol = "RNU1-1",
     name = "RNA, U1 small nuclear 1",
@@ -301,11 +300,10 @@ This file contains functions for creating an manipulations objects.
     start = 16514122,
     end = 16514285,
     strand = "-",
-    sequence = "tttcatacttacctggcagg...",
-    RNA_sequence = 'aaaguaug...',
+    sequence = "tttcatacttacctggcagg",
+    RNA_sequence = 'aaaguaug',
     transcript_id = "ENST00000383925.1",
     snRNA_class = 'U1')
-  ncRNA_miRNA
   ```
 + `create_miRNA(...)`: creates an object of class miRNA by using, as parameters, the same slots required by the class.<br>
   Example:
@@ -320,11 +318,11 @@ This file contains functions for creating an manipulations objects.
     start = 51693254,
     end = 51693339,
     strand = "+",
-    sequence = "ACGTACCGTCAAA...",
+    sequence = "ACGTACCGTCAAA",
     transcript_id = "ENST00000385273.1",
     type = 'miRNA',
-    RNA_sequence = "UGCCAGUCUC....",
-    target_genes = ("ENSG00000141736", "ENSG00000065361"),
+    RNA_sequence = "UGCCAGUCUC",
+    target_genes = c("ENSG00000141736", "ENSG00000065361"),
     seed = 'GAGUCCC',
     mature_sequence = "ucccugagacccuuuaaccuguga")
   miRNA125a

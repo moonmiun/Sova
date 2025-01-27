@@ -19,5 +19,5 @@ Get a slot value without directly having to access it.
 }
 \examples{
 # Access the mature sequence of a miRNA
-get_slot(my_object, 'mature_sequence')
+# get_slot(my_object, 'mature_sequence')
 }

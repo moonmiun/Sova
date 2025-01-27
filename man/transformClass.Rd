@@ -23,18 +23,19 @@ This function lets the user create an object of a subclass by simply adding
 the required parameters to the 'superior' class.
 }
 \examples{
-It is possible to go from Gene to ProteinCodingGene or ncRNA, from ncRNA to
-miRNA, rRNA, tRNA or snRNA and from Gene to one of the subclasses of ncRNA.
-When jumping from Gene to one of the subclasses of ncRNA (skipping the
-intermediate step on ncRNA), it is important to remember the necessary field
-required by ncRNA ("type") too, in addition to subclasses-specific fields.
+ # Classes hierarchy
+# It is possible to go from Gene to ProteinCodingGene or ncRNA, from ncRNA to
+# miRNA, rRNA, tRNA or snRNA and from Gene to one of the subclasses of ncRNA.
+# When jumping from Gene to one of the subclasses of ncRNA (skipping the
+# intermediate step on ncRNA), it is important to remember the necessary field
+# required by ncRNA ("type") too, in addition to subclasses-specific fields.
 
 # Transform a general ncRNA object in a tRNA object
-my_ncRNA <- create_ncRNA(id ='ENSG00000210049.1', name = 'mitochondrially
-encoded tRNA phenylalanine', assembly = 'GRCh38/hg38', chromosome = 'chrM',
-start = 577, end = 647, strand = '+', transcript_id = 'ENST00000387314.1',
-type = 'tRNA')
-my_tRNA <- transformClass(my_ncRNA, 'tRNA', list(aminoacid = 'phenylalanine',
-anticodon = 'GAA'))
-my_tRNA
+# my_ncRNA <- create_ncRNA(id ='ENSG00000210049.1', name = 'mitochondrially
+# encoded tRNA phenylalanine', assembly = 'GRCh38/hg38', chromosome = 'chrM',
+# start = 577, end = 647, strand = '+', transcript_id = 'ENST00000387314.1',
+# type = 'tRNA')
+# my_tRNA <- transformClass(my_ncRNA, 'tRNA', list(aminoacid = 'phenylalanine',
+# anticodon = 'GAA'))
+
 }

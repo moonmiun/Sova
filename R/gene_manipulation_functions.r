@@ -23,28 +23,28 @@ NULL
 #' @return A Gene object.
 #' @examples
 #' # 0 and 1 based positions
-#' This package uses 1-based coordinate system since ENSEMBL uses the same
-#' coordinate system. The user is advised to always check the documentation of
-#' any database the information is collected from.
-#' For example, UCSC Genome Browser tables use 0-based coordinate system, which
-#' means that the first base pair is at position 0 and not 1. At the same time,
-#' the UCSC Genome Browser web interface uses the 1-start coordinate system.
+#' # This package uses 1-based coordinate system since ENSEMBL uses the same
+#' # coordinate system. The user is advised to always check the documentation of
+#' # any database the information is collected from.
+#' # For example, UCSC Genome Browser tables use 0-based coordinate system, which
+#' # means that the first base pair is at position 0 and not 1. At the same time,
+#' # the UCSC Genome Browser web interface uses the 1-start coordinate system.
 #'
 #' # Creating a Gene object
-#' gene <- createGene(
-#'   id = "ENSG00000139618.19",
-#'   symbol = "BRCA2",
-#'   name = "BRCA2 DNA repair associated, transcript variant 4",
-#'   description = "Inherited mutations in BRCA1 and this gene, BRCA2, confer
-#'   increased lifetime risk of developing breast or ovarian cancer....",
-#'   assembly = "GRCh38.p14"
-#'   chromosome = "chr13",
-#'   start = 32315508,
-#'   end = 32400268,
-#'   strand = "+",
-#'   sequence = "ACGTACCGTCAAA....."
-#' )
-#' gene
+#' # gene <- createGene(
+#' #  id = "ENSG00000139618.19",
+#' #    symbol = "BRCA2",
+#' #    name = "BRCA2 DNA repair associated, transcript variant 4",
+#' #   description = "Inherited mutations in BRCA1 and this gene, BRCA2, confer
+#' #   increased lifetime risk of developing breast or ovarian cancer....",
+#' #   assembly = "GRCh38.p14"
+#' #   chromosome = "chr13",
+#' #   start = 32315508,
+#' #   end = 32400268,
+#' #   strand = "+",
+#' #   sequence = "ACGTACCGTCAAA....."
+#' # )
+#'
 #' @export
 createGene <- function(id, symbol = NA_character_, name = NA_character_,
                        description = NA_character_, assembly,
@@ -77,21 +77,21 @@ createGene <- function(id, symbol = NA_character_, name = NA_character_,
 #' subclass.
 #' @return A Gene object.
 #' @examples
-#  # Classes hierarchy
-#' It is possible to go from Gene to ProteinCodingGene or ncRNA, from ncRNA to
-#' miRNA, rRNA, tRNA or snRNA and from Gene to one of the subclasses of ncRNA.
-#' When jumping from Gene to one of the subclasses of ncRNA (skipping the
-#' intermediate step on ncRNA), it is important to remember the necessary field
-#' required by ncRNA ("type") too, in addition to subclasses-specific fields.
+#'  # Classes hierarchy
+#' # It is possible to go from Gene to ProteinCodingGene or ncRNA, from ncRNA to
+#' # miRNA, rRNA, tRNA or snRNA and from Gene to one of the subclasses of ncRNA.
+#' # When jumping from Gene to one of the subclasses of ncRNA (skipping the
+#' # intermediate step on ncRNA), it is important to remember the necessary field
+#' # required by ncRNA ("type") too, in addition to subclasses-specific fields.
 #'
 #' # Transform a general ncRNA object in a tRNA object
-#' my_ncRNA <- create_ncRNA(id ='ENSG00000210049.1', name = 'mitochondrially
-#' encoded tRNA phenylalanine', assembly = 'GRCh38/hg38', chromosome = 'chrM',
-#' start = 577, end = 647, strand = '+', transcript_id = 'ENST00000387314.1',
-#' type = 'tRNA')
-#' my_tRNA <- transformClass(my_ncRNA, 'tRNA', list(aminoacid = 'phenylalanine',
-#' anticodon = 'GAA'))
-#' my_tRNA
+#' # my_ncRNA <- create_ncRNA(id ='ENSG00000210049.1', name = 'mitochondrially
+#' # encoded tRNA phenylalanine', assembly = 'GRCh38/hg38', chromosome = 'chrM',
+#' # start = 577, end = 647, strand = '+', transcript_id = 'ENST00000387314.1',
+#' # type = 'tRNA')
+#' # my_tRNA <- transformClass(my_ncRNA, 'tRNA', list(aminoacid = 'phenylalanine',
+#' # anticodon = 'GAA'))
+#'
 #' @export
 transformClass <- function(object, target_class, additional_fields = list()) {
   if (!is(object, "Gene")) {
@@ -371,7 +371,7 @@ create_rRNA <- function(id, symbol = NA_character_, name = NA_character_,
       sequence = sequence,
       transcript_id = transcript_id,
       type = type,
-      RNA_sequence,
+      RNA_sequence = RNA_sequence,
       rRNA_type = rRNA_type,
       ribosomal_subunit = ribosomal_subunit)
 }
@@ -422,7 +422,7 @@ create_snRNA <- function(id, symbol = NA_character_, name = NA_character_,
       sequence = sequence,
       transcript_id = transcript_id,
       type = type,
-      RNA_sequence,
+      RNA_sequence = RNA_sequence,
       snRNA_class = snRNA_class,
       subclass = subclass,
       associated_proteins = associated_proteins)
@@ -437,7 +437,7 @@ create_snRNA <- function(id, symbol = NA_character_, name = NA_character_,
 #' @return Slot value
 #' @examples
 #' # Access the mature sequence of a miRNA
-#' get_slot(my_object, 'mature_sequence')
+#' # get_slot(my_object, 'mature_sequence')
 #' @export
 get_slot <- function(object, slot_name) {
   if (!is(object, "Gene")) stop("The object needs to inherit class 'Gene'.")

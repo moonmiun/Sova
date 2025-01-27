@@ -19,18 +19,18 @@ Class to define microRNA
 
 \examples{
 # Seed region
-The binding between miRNAs and target genes is not perfect across the whole
-mature miRNA sequence: in mammals it is dominated by the so-called seed
-region.
-This seed region at the 5’ end of the mature miRNA consists of eight
-nucleotides.
+# The binding between miRNAs and target genes is not perfect across the whole
+# mature miRNA sequence: in mammals it is dominated by the so-called seed
+# region.
+# This seed region at the 5’ end of the mature miRNA consists of eight
+# nucleotides.
 
 # Mature sequence
-The generation of miRNAs is a multistage process. Briefly, the mature ∼22 nt
-miRNA sequence is embedded in one strand of an ∼33 bp double-stranded stem
-characteristic of hairpin structures
-in primary miRNA (pri-miRNA) transcripts produced by RNA polymerase II or
-III. The miRNA must therefore be excised during its biogenesis to elicit gene
- silencing. To quickly find the mature sequence of the miRNA, the user can
- check this database: https://mirbase.org/.
+# The generation of miRNAs is a multistage process. Briefly, the mature ∼22 nt
+# miRNA sequence is embedded in one strand of an ∼33 bp double-stranded stem
+# characteristic of hairpin structures
+# in primary miRNA (pri-miRNA) transcripts produced by RNA polymerase II or
+# III. The miRNA must therefore be excised during its biogenesis to elicit gene
+#  silencing. To quickly find the mature sequence of the miRNA, the user can
+#  check this database: https://mirbase.org/.
 }

@@ -16,5 +16,5 @@ A Biostrings::DNAString that contains your DNA sequence.
 Reads a FASTA file and returns a Biostring::DNAString.
 }
 \examples{
-sequence <- readFasta('C:/User/Desktop/file.fa')
+# sequence <- readFasta('C:/User/Desktop/file.fa')
 }

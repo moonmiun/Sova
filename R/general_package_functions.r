@@ -14,7 +14,7 @@ NULL
 #' @param filepath The FASTA file path.
 #' @return A Biostrings::DNAString that contains your DNA sequence.
 #' @examples
-#' sequence <- readFasta('C:/User/Desktop/file.fa')
+#' # sequence <- readFasta('C:/User/Desktop/file.fa')
 #' @export
 readFasta <- function(filepath) {
   if (!file.exists(filepath)) {
@@ -71,7 +71,7 @@ validateGeneInputs <- function(start, end, strand,
       sequence <- Biostrings::DNAString(sequence)
     }, error = function(e) {
       # If it's not a valid sequence, checks if it's a path to a FASTA file
-      if (file.exists(sequence) && grepl("\\.fa$", sequence,
+      if (file.exists(sequence) && grepl("\\.fasta$", sequence,
                                          ignore.case = TRUE)) {
         sequence <- readFasta(sequence)
       } else {
@@ -277,9 +277,9 @@ setGeneric("lengthProduct", function(object) standardGeneric("lengthProduct"))
 #' @rdname lengthProduct
 #' @examples
 #' # Class Object
-#' This is the case in which there is no information about the gene so the
-#' genetic product is the length of its RNA transcription.
-#' lengthProduct(Gene)
+#' # This is the case in which there is no information about the gene so the
+#' # genetic product is the length of its RNA transcription.
+#' # lengthProduct(Gene)
 setMethod("lengthProduct", "Gene", function(object) {
   # 1 is added because the coordinates are inclusive, so that means that the
   # last position is still part of the gene.
@@ -290,13 +290,13 @@ setMethod("lengthProduct", "Gene", function(object) {
 #' @examples
 #' # Class ProteinCodingGene
 #' # Example in which the RNA sequence is given.
-#' set_slot(protein_gene, 'protein_sequence', 'MTEYKLVVVG')
-#' lengthProduct(protein_gene)
-#' > 10
+#' # set_slot(protein_gene, 'protein_sequence', 'MTEYKLVVVG')
+#' # lengthProduct(protein_gene)
+#' # > 10
 #'
 #' # Example in which the RNA sequence is not given so the function uses the
-#' length of the exons.
-#' lengthProduct(protein_gene)
+#' # length of the exons.
+#' # lengthProduct(protein_gene)
 setMethod("lengthProduct", "ProteinCodingGene", function(object) {
   if (length(object@protein_sequence) > 0
       && nzchar(as.character(object@protein_sequence))) {
@@ -313,11 +313,11 @@ setMethod("lengthProduct", "ProteinCodingGene", function(object) {
 #' @rdname lengthProduct
 #' @examples
 #' # Class ncRNA
-#' In this case the genetic product is simply the RNA transcription of the gene,
-#' which has the same length as the gene itself.
-#' This method is valid also for objects of sub-classes
-#' 'tRNA', 'rRNA' and 'snRNA'.
-#' lengthProduct(ncRNA)
+#' # In this case the genetic product is simply the RNA transcription of the gene,
+#' # which has the same length as the gene itself.
+#' # This method is valid also for objects of sub-classes
+#' # 'tRNA', 'rRNA' and 'snRNA'.
+#' # lengthProduct(ncRNA)
 setMethod("lengthProduct", "ncRNA", function(object) {
   object@end - object@start + 1
 })
@@ -325,9 +325,9 @@ setMethod("lengthProduct", "ncRNA", function(object) {
 #' @rdname lengthProduct
 #' @examples
 #' # Class miRNA
-#' set_slot(miRNA_object, 'mature_sequence', 'UGAGGUAGUAGGUUGUAUAGUU')
-#' lengthProduct(miRNA_object)
-#' > 22
+#' # set_slot(miRNA_object, 'mature_sequence', 'UGAGGUAGUAGGUUGUAUAGUU')
+#' # lengthProduct(miRNA_object)
+#' # > 22
 setMethod("lengthProduct", "miRNA", function(object) {
   # If there's the sequence of the mature miRNA, returns that length.
   if (length(object@mature_sequence) > 0) {

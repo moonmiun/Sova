@@ -81,20 +81,20 @@ setValidity("Gene", function(object) {
 #' @slot protein_sequence Aminoacid sequence.
 #' @examples
 #' # Example of creating a GRanges object for exons
-#' library(GenomicRanges)
-#' exons <- GRanges(
-#'   seqnames = Rle(c("chr13")),
-#'   ranges = IRanges(start = c(32315507,32316421,32319076,32325075,32326100,
-#'   32326241,32326498,32329442,32330918,32332271,32336264,32344557,32346826,
-#'   32354860,32356427,32357741,32362522,32363178,32370401,32370955,32376669,
-#'   32379316,32379749,32380006,32394688,32396897,32398161),
-#'                    end = c(32315667,32316527,32319325,32325184,32326150,
-#'                    32326282,32326613,32329492,32331030,32333387,32341196,
-#'                    32344653,32346896,32355288,32356609,32357929,32362693,
-#'                    32363533,32370557,32371100,32376791,32379515,32379913,
-#'                    32380145,32394933,32397044,32400268)),
-#'   strand = Rle(c("+"))
-#' )
+#' # library(GenomicRanges)
+#' # exons <- GRanges(
+#' #   seqnames = Rle(c("chr13")),
+#' #   ranges = IRanges(start = c(32315507,32316421,32319076,32325075,32326100,
+#' #   32326241,32326498,32329442,32330918,32332271,32336264,32344557,32346826,
+#' #   32354860,32356427,32357741,32362522,32363178,32370401,32370955,32376669,
+#' #   32379316,32379749,32380006,32394688,32396897,32398161),
+#' #                    end = c(32315667,32316527,32319325,32325184,32326150,
+#' #                    32326282,32326613,32329492,32331030,32333387,32341196,
+#' #                    32344653,32346896,32355288,32356609,32357929,32362693,
+#' #                    32363533,32370557,32371100,32376791,32379515,32379913,
+#' #                    32380145,32394933,32397044,32400268)),
+#' #   strand = Rle(c("+"))
+#' # )
 #'
 #' @export
 setClass(
@@ -175,20 +175,20 @@ setValidity("ncRNA", function(object) {
 #' @slot mature_sequence Mature miRNA.
 #' @examples
 #' # Seed region
-#' The binding between miRNAs and target genes is not perfect across the whole
-#' mature miRNA sequence: in mammals it is dominated by the so-called seed
-#' region.
-#' This seed region at the 5’ end of the mature miRNA consists of eight
-#' nucleotides.
+#' # The binding between miRNAs and target genes is not perfect across the whole
+#' # mature miRNA sequence: in mammals it is dominated by the so-called seed
+#' # region.
+#' # This seed region at the 5’ end of the mature miRNA consists of eight
+#' # nucleotides.
 #'
 #' # Mature sequence
-#' The generation of miRNAs is a multistage process. Briefly, the mature ∼22 nt
-#' miRNA sequence is embedded in one strand of an ∼33 bp double-stranded stem
-#' characteristic of hairpin structures
-#' in primary miRNA (pri-miRNA) transcripts produced by RNA polymerase II or
-#' III. The miRNA must therefore be excised during its biogenesis to elicit gene
-#'  silencing. To quickly find the mature sequence of the miRNA, the user can
-#'  check this database: https://mirbase.org/.
+#' # The generation of miRNAs is a multistage process. Briefly, the mature ∼22 nt
+#' # miRNA sequence is embedded in one strand of an ∼33 bp double-stranded stem
+#' # characteristic of hairpin structures
+#' # in primary miRNA (pri-miRNA) transcripts produced by RNA polymerase II or
+#' # III. The miRNA must therefore be excised during its biogenesis to elicit gene
+#' #  silencing. To quickly find the mature sequence of the miRNA, the user can
+#' #  check this database: https://mirbase.org/.
 #' @export
 setClass(
   Class = "miRNA",
@@ -220,21 +220,21 @@ setValidity("miRNA", function(object) {
 #' @slot anticodon Anticodon sequence.
 #' @examples
 #' # Correct notation for aminoacids
-#' Aminoacid information can be stored in any of the following notations:
-#' - full name (ex: 'phenylalanine')
-#' - 3 letters notation (ex: 'phe')
-#' - 1 letter notation (ex: 'F')
-#' None of these notations is required or checked by the package, but it is
-#' recommended for the user to only use one of them for all of the objects.
-#'
+#' # Aminoacid information can be stored in any of the following notations:
+#' # - full name (ex: 'phenylalanine')
+#' # - 3 letters notation (ex: 'phe')
+#' # - 1 letter notation (ex: 'F')
+#' # None of these notations is required or checked by the package, but it is
+#' # recommended for the user to only use one of them for all of the objects.
+#' #
 #' # Correct notation for anticodon sequences
-#' The standard notation for anticodon sequences is 5'-XXX-3', using RNA
-#' nitrogenous bases (which means Thymine is not allowed).
-#' For the sake of simplicity, this package only stores information about the
-#' basepairs and doesn't allow the user to indicate the 5' and 3' ends: it is
-#' good practice, though, to remember to store the anticodon information
-#' in the correct order.
-#' Anti-codons' sequences can be found here: https://rnacentral.org/.
+#' # The standard notation for anticodon sequences is 5'-XXX-3', using RNA
+#' # nitrogenous bases (which means Thymine is not allowed).
+#' # For the sake of simplicity, this package only stores information about the
+#' # basepairs and doesn't allow the user to indicate the 5' and 3' ends: it is
+#' # good practice, though, to remember to store the anticodon information
+#' # in the correct order.
+#' # Anti-codons' sequences can be found here: https://rnacentral.org/.
 #' @export
 setClass(
   Class = "tRNA",
@@ -270,9 +270,9 @@ setValidity("tRNA", function(object) {
 #' @slot ribosomal_subunit In which subunit of the ribosome the rRNA is found.
 #' @examples
 #' # Ribosomal subunit
-#' A ribosome is composed by a small and a big subunit. For prokaryotes the
-#' small subunit is denoted as 30S and the big one as 50S, while for eukaryotes
-#' the former is 40S and the latter is 60S.
+#' # A ribosome is composed by a small and a big subunit. For prokaryotes the
+#' # small subunit is denoted as 30S and the big one as 50S, while for eukaryotes
+#' # the former is 40S and the latter is 60S.
 #' @export
 setClass(
   Class = "rRNA",
@@ -312,11 +312,11 @@ setValidity("rRNA", function(object) {
 #' interacts with.
 #' @examples
 #' # Subclasses
-#' By definition, snRNAs are small molecules of RNA that can be found in the
-#' nucleus. Two subclasses can be identified depending on the specific
-#' localization inside the nucleus:
-#' - snoRNA, is the snRNA that if located in the nucleous;
-#' - scaRNA, is the snRNA located in the Cajal body.
+#' # By definition, snRNAs are small molecules of RNA that can be found in the
+#' # nucleus. Two subclasses can be identified depending on the specific
+#' # localization inside the nucleus:
+#' # - snoRNA, is the snRNA that if located in the nucleous;
+#' # - scaRNA, is the snRNA located in the Cajal body.
 #' @export
 setClass(
   Class = "snRNA",

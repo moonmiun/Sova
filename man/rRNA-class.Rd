@@ -18,7 +18,7 @@ A class that represents genes that code for ribosomal rRNA (rRNA)
 
 \examples{
 # Ribosomal subunit
-A ribosome is composed by a small and a big subunit. For prokaryotes the
-small subunit is denoted as 30S and the big one as 50S, while for eukaryotes
-the former is 40S and the latter is 60S.
+# A ribosome is composed by a small and a big subunit. For prokaryotes the
+# small subunit is denoted as 30S and the big one as 50S, while for eukaryotes
+# the former is 40S and the latter is 60S.
 }

@@ -408,8 +408,7 @@ manage the package.<br> ├──
 README.html                                   # This file, containing
 information and examples. <br> ├── README.pdf<br> └──
 tests/                                                 # Automatized
-tests for the package.<br> │  ├── testthat.R<br> │  └──
-testthat/<br></p>
+tests for the package.<br> │  └── test_examples.R<br></p>
 </div>
 <div id="supporting-files" class="section level2">
 <h2><strong>Supporting files</strong></h2>
@@ -692,7 +691,7 @@ gene</code></pre></li>
 <li><p><code>create_ncRNA(...)</code>: creates an object of class ncRNA
 by using, as parameters, the same slots required by the class.<br>
 Example:</p>
-<pre><code>ncRNA_miRNA &lt;- createProteinCodingGene(
+<pre><code>ncRNA_miRNA &lt;- create_ncRNA(
   id = &quot;ENSG00000208008&quot;,
   symbol = &quot;MIR125A&quot;,
   name = &quot;microRNA 125a&quot;,
@@ -710,7 +709,7 @@ ncRNA_miRNA</code></pre></li>
 <li><p><code>create_tRNA(...)</code>: creates an object of class tRNA by
 using, as parameters, the same slots required by the class.<br>
 Example:</p>
-<pre><code>ncRNA_tRNA_Phe &lt;- create_ncRNA(
+<pre><code>ncRNA_tRNA_Phe &lt;- create_tRNA(
   id = &quot;ENSG00000210049.1&quot;,
   name = &quot;Mitochondrial tRNA phenylalanine&quot;,
   assembly = &quot;hg38&quot;,
@@ -726,7 +725,7 @@ Example:</p>
 <li><p><code>create_rRNA(...)</code>: creates an object of class rRNA by
 using, as parameters, the same slots required by the class.<br>
 Example:</p>
-<pre><code>18S_rRNA &lt;- create_rRNA(
+<pre><code>rRNA_18s &lt;- create_rRNA(
   id = &quot;ENSG00000225840&quot;,
   symbol = &quot;RNA18SN5&quot;,
   name = &quot;RNA, 18S ribosomal pseudogene&quot;,
@@ -744,7 +743,7 @@ Example:</p>
 <li><p><code>create_snRNA(...)</code>: creates an object of class snRNA
 by using, as parameters, the same slots required by the class.<br>
 Example:</p>
-<pre><code>ncRNA_miRNA &lt;- createProteinCodingGene(
+<pre><code>ncRNA_snRNA &lt;- create_snRNA(
   id = &quot;ENSG00000206652&quot;,
   symbol = &quot;RNU1-1&quot;,
   name = &quot;RNA, U1 small nuclear 1&quot;,
@@ -754,11 +753,10 @@ Example:</p>
   start = 16514122,
   end = 16514285,
   strand = &quot;-&quot;,
-  sequence = &quot;tttcatacttacctggcagg...&quot;,
-  RNA_sequence = &#39;aaaguaug...&#39;,
+  sequence = &quot;tttcatacttacctggcagg&quot;,
+  RNA_sequence = &#39;aaaguaug&#39;,
   transcript_id = &quot;ENST00000383925.1&quot;,
-  snRNA_class = &#39;U1&#39;)
-ncRNA_miRNA</code></pre></li>
+  snRNA_class = &#39;U1&#39;)</code></pre></li>
 <li><p><code>create_miRNA(...)</code>: creates an object of class miRNA
 by using, as parameters, the same slots required by the class.<br>
 Example:</p>
@@ -772,11 +770,11 @@ Example:</p>
   start = 51693254,
   end = 51693339,
   strand = &quot;+&quot;,
-  sequence = &quot;ACGTACCGTCAAA...&quot;,
+  sequence = &quot;ACGTACCGTCAAA&quot;,
   transcript_id = &quot;ENST00000385273.1&quot;,
   type = &#39;miRNA&#39;,
-  RNA_sequence = &quot;UGCCAGUCUC....&quot;,
-  target_genes = (&quot;ENSG00000141736&quot;, &quot;ENSG00000065361&quot;),
+  RNA_sequence = &quot;UGCCAGUCUC&quot;,
+  target_genes = c(&quot;ENSG00000141736&quot;, &quot;ENSG00000065361&quot;),
   seed = &#39;GAGUCCC&#39;,
   mature_sequence = &quot;ucccugagacccuuuaaccuguga&quot;)
 miRNA125a</code></pre>

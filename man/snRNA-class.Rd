@@ -22,9 +22,9 @@ interacts with.}
 
 \examples{
 # Subclasses
-By definition, snRNAs are small molecules of RNA that can be found in the
-nucleus. Two subclasses can be identified depending on the specific
-localization inside the nucleus:
-- snoRNA, is the snRNA that if located in the nucleous;
-- scaRNA, is the snRNA located in the Cajal body.
+# By definition, snRNAs are small molecules of RNA that can be found in the
+# nucleus. Two subclasses can be identified depending on the specific
+# localization inside the nucleus:
+# - snoRNA, is the snRNA that if located in the nucleous;
+# - scaRNA, is the snRNA located in the Cajal body.
 }
