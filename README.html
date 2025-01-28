@@ -365,8 +365,10 @@ Bioinformatics for Computational Genomics fo the University of Milan in
 collaboration with Politecnico of Milan. Nevertheless, the main code for
 Sova and all associated files are available for personal use with no
 restriction: citing the author is not necessary, but deeply
-appreciated.<br> <br> For any questions regarding Sova, feel free to
-contact me through the following e-mail: <a href="mailto:flavia.leotta@hotmail.com" class="email">flavia.leotta@hotmail.com</a>.</p>
+appreciated.<br> <br> It is free to download from my
+<a href="https://github.com/moonmiun/Sova" target="_blank">GitHub
+account</a>. For any questions regarding Sova, feel free to contact me
+through the following e-mail: <a href="mailto:flavia.leotta@hotmail.com" class="email">flavia.leotta@hotmail.com</a>.</p>
 </div>
 <div id="introduction" class="section level2">
 <h2><strong>Introduction</strong></h2>
@@ -425,26 +427,33 @@ the packages that Sova depends on, which are:</p>
 <li>S4Vectors;</li>
 <li>GenomicRanges.</li>
 </ul>
-<p>Before the user installs Sova and loads it, it is recommended to run
-this command first:</p>
-<pre><code>required_packages &lt;- c(&quot;Biostrings&quot;, &quot;biomaRt&quot;, &quot;Gviz&quot;, &quot;IRanges&quot;, &quot;S4Vectors&quot;, &quot;GenomicRanges&quot;)
+<p>Before the user installs Sova and loads it, it is recommended to
+install the packages it depends on. First, if the user doesn’t have
+BiocManager, it is needed to install it:</p>
+<pre><code>install.packages(&quot;BiocManager&quot;)</code></pre>
+<p>Then run this command:</p>
+<pre><code>required_packages &lt;- c(&quot;Biostrings&quot;, &quot;biomaRt&quot;, &quot;Gviz&quot;, &quot;IRanges&quot;, &quot;S4Vectors&quot;, &quot;GenomicRanges&quot;, &quot;hms&quot;)
 
-install_and_load &lt;- function(packages) {
-  for (pkg in packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      if (pkg %in% rownames(BiocManager::available())) {
-        BiocManager::install(pkg)
-      } else {
-        install.packages(pkg)
-      }
+for (pkg in required_packages) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    
+    bioc_packages &lt;- rownames(available.packages(contrib.url(BiocManager::repositories())))
+    
+    if (pkg %in% bioc_packages) {
+      BiocManager::install(pkg)
+    } else {
+      install.packages(pkg)
     }
-    library(pkg, character.only = TRUE)
   }
-}
-
-install_and_load(required_packages)</code></pre>
+  
+  library(pkg, character.only = TRUE)
+}</code></pre>
 <p>It checks if the required packages are installed (if not, installs
-them) and loads them in the workspace.</p>
+them) and loads them in the workspace. Then, the user can install Sova
+by changing its path, and load it:</p>
+<pre><code>install.packages(&quot;C:/path/to/Sova&quot;, repos = NULL, type = &quot;source&quot;)
+library(Sova)</code></pre>
+<p>Now Sova is ready for use!</p>
 </div>
 <div id="man" class="section level3">
 <h3>2. man/</h3>

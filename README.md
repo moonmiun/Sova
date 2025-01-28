@@ -10,7 +10,7 @@ Scientific programming Project (R) by Flavia Leotta
 
 ## **Disclaimer**
 This is a project created for purely didactic purposes, as an assignment for the Scientific Programming course held by Professor Piro Rosario Michael. The author is Flavia Leotta, a student of MSc Bioinformatics for Computational Genomics fo the University of Milan in collaboration with Politecnico of Milan. Nevertheless, the main code for Sova and all associated files are available for personal use with no restriction: citing the author is not necessary, but deeply appreciated.<br>
-<br>
+<br> It is free to download from my <a href="https://github.com/moonmiun/Sova" target="_blank">GitHub account</a>.
 For any questions regarding Sova, feel free to contact me through the following e-mail: flavia.leotta@hotmail.com.
 
 ## **Introduction**
@@ -60,27 +60,36 @@ This file lists all the general information of this package but also the package
 - S4Vectors;
 - GenomicRanges.
 
-Before the user installs Sova and loads it, it is recommended to run this command first:
+Before the user installs Sova and loads it, it is recommended to install the packages it depends on. First, if the user doesn't have BiocManager, it is needed to install it:
+```
+install.packages("BiocManager")
+```
+Then run this command:
 
 ```
-required_packages <- c("Biostrings", "biomaRt", "Gviz", "IRanges", "S4Vectors", "GenomicRanges")
+required_packages <- c("Biostrings", "biomaRt", "Gviz", "IRanges", "S4Vectors", "GenomicRanges", "hms")
 
-install_and_load <- function(packages) {
-  for (pkg in packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      if (pkg %in% rownames(BiocManager::available())) {
-        BiocManager::install(pkg)
-      } else {
-        install.packages(pkg)
-      }
+for (pkg in required_packages) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    
+    bioc_packages <- rownames(available.packages(contrib.url(BiocManager::repositories())))
+    
+    if (pkg %in% bioc_packages) {
+      BiocManager::install(pkg)
+    } else {
+      install.packages(pkg)
     }
-    library(pkg, character.only = TRUE)
   }
+  
+  library(pkg, character.only = TRUE)
 }
-
-install_and_load(required_packages)
 ```
-It checks if the required packages are installed (if not, installs them) and loads them in the workspace.
+It checks if the required packages are installed (if not, installs them) and loads them in the workspace. Then, the user can install Sova by changing its path, and load it:
+```
+install.packages("C:/path/to/Sova", repos = NULL, type = "source")
+library(Sova)
+```
+Now Sova is ready for use!
 
 ### 2. man/
 This folder contains the documentation for each function. They contain all the information that is going to be displayed when calling the manual.
