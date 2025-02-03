@@ -1,8 +1,30 @@
 ---
-output:
-  html_document: default
-  pdf_document: default
+title: "Sova: Managing Gene Information in R"
+author: "Flavia Leotta"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sova}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(Sova)
+library(Biostrings)
+library(biomaRt)
+library(Gviz)
+library(IRanges)
+library(S4Vectors)
+library(GenomicRanges)
+```
+
 <img src="inst/images/logo.png" alt="logo" style="width:300px; height:auto; display:block; margin:auto;">
 
 # **Sova**
@@ -61,12 +83,12 @@ This file lists all the general information of this package but also the package
 - GenomicRanges.
 
 Before the user installs Sova and loads it, it is recommended to install the packages it depends on. First, if the user doesn't have BiocManager, it is needed to install it:
-```
+`
 install.packages("BiocManager")
-```
+`
 Then run this command:
 
-```
+`
 required_packages <- c("Biostrings", "biomaRt", "Gviz", "IRanges", "S4Vectors", "GenomicRanges", "hms")
 
 for (pkg in required_packages) {
@@ -83,11 +105,11 @@ for (pkg in required_packages) {
   
   library(pkg, character.only = TRUE)
 }
-```
+`
 It checks if the required packages are installed (if not, installs them) and loads them in the workspace. Then, the user can install Sova by changing its path, and load it:
-```
-install.packages("C:/path/to/Sova", repos = NULL, type = "source")
-library(Sova)
+```{r}
+# install.packages("C:/path/to/Sova", repos = NULL, type = "source")
+# library(Sova)
 ```
 Now Sova is ready for use!
 
@@ -95,8 +117,8 @@ Now Sova is ready for use!
 This folder contains the documentation for each function. They contain all the information that is going to be displayed when calling the manual.
 For example, when the user wishes to know which parameter a certain function takes, this can be done by calling:
 
-```
-?sova_function
+```{r}
+# ?sova_function
 ```
 The manual will appear with a description of the function and the required parameters, as well as, when available, examples.
 
@@ -143,12 +165,12 @@ The Gene class is not a virtual class because the package lets the user save bas
 
 -`transcript_id` (string): very often, a gene can encode for different transcript isoforms due to alternative splicing: each of them is described by a different transcript_id. This field is not required but it is highly recommended to fill it;<br>
 -`exons` (GRanges, *required*): exons ranges defined as GRanges objects. Here's an example on how to build an object of class GRanges:
-```
+```{r}
 exons <- GRanges(
   seqnames = Rle(c("chr13")),
-  ranges = IRanges(start = c(32315507,32316421, ...),
-                    end = c(32315667,32316527, ...)),
-  strand = Rle(c("+"s))
+  ranges = IRanges(start = c(32315507,32316421),
+                    end = c(32315667,32316527)),
+  strand = Rle(c("+"))
 )
 ```
 It is important that the `start` and `end` vectors are of the same length;<br>
@@ -208,7 +230,7 @@ This file contains functions for creating an manipulations objects.
 
 + `createGene(...)`: Creates an object of the `Gene` class, which represents a generic gene with parameters which are exactly the same as the ones defined by the slots of this class.<br>
   Example:
-  ```
+```{r}
   gene <- createGene(
     id = "ENSG00000139618.19",
     symbol = "BRCA2",
@@ -219,12 +241,19 @@ This file contains functions for creating an manipulations objects.
     start = 32315508,
     end = 32400268,
     strand = "+",
-    sequence = "ACGTACCGTCAAA...")
+    sequence = "ACGTACCGTCAAA")
   gene
-  ```
+```
 + `createProteinCodingGene(...)`: creates an object of class ProteinCodingGene by using, as parameters, the same slots required by the class.<br>
   Example:
-  ```
+```{r}
+exons <- GRanges(
+  seqnames = Rle(c("chr13")),
+  ranges = IRanges(start = c(32315507,32316421),
+                    end = c(32315667,32316527)),
+  strand = Rle(c("+"))
+)
+
   gene <- createProteinCodingGene(
     id = "ENSG00000139618.19",
     symbol = "BRCA2",
@@ -235,17 +264,17 @@ This file contains functions for creating an manipulations objects.
     start = 32315508,
     end = 32400268,
     strand = "+",
-    sequence = "ACGTACCGTCAAA...",
-    transcirpt_id = "ENST00000544455.6",
+    sequence = "ACGTACCGTCAAA",
+    transcript_id = "ENST00000544455.6",
     exons = exons,                    # A Granges() object defined previously
     protein_id = "P51587",
     protein_name = "Breast cancer type 2 susceptibility protein",
-    protein_sequence = "mpigskerptffeifktrcn....")
+    protein_sequence = "ftratfgf")
   gene
-  ```
+```
 + `create_ncRNA(...)`: creates an object of class ncRNA by using, as parameters, the same slots required by the class.<br>
   Example:
-  ```
+```{r}
   ncRNA_miRNA <- create_ncRNA(
     id = "ENSG00000208008",
     symbol = "MIR125A",
@@ -256,15 +285,15 @@ This file contains functions for creating an manipulations objects.
     start = 51693254,
     end = 51693339,
     strand = "+",
-    sequence = "ACGTACCGTCAAA...",
+    sequence = "ACGTACCGTCAAA",
     transcript_id = "ENST00000385273.1",
     type = 'miRNA',
-    RNA_sequence = "UGCCAGUCUC....")
+    RNA_sequence = RNAString("UGCCAGUCUC"))
   ncRNA_miRNA
-  ```
+```
 + `create_tRNA(...)`: creates an object of class tRNA by using, as parameters, the same slots required by the class.<br>
   Example:
-  ```
+```{r}
   ncRNA_tRNA_Phe <- create_tRNA(
     id = "ENSG00000210049.1",
     name = "Mitochondrial tRNA phenylalanine",
@@ -278,10 +307,10 @@ This file contains functions for creating an manipulations objects.
     aminoacid = "phenylalanine", 
     anticodon = "GAA"
   )
-  ```
+```
 + `create_rRNA(...)`: creates an object of class rRNA by using, as parameters, the same slots required by the class.<br>
   Example:
-  ```
+```{r}
   rRNA_18s <- create_rRNA(
     id = "ENSG00000225840",
     symbol = "RNA18SN5",
@@ -297,10 +326,10 @@ This file contains functions for creating an manipulations objects.
     rRNA_type = "18S", 
     ribosomal_subunit = "40S"
   )
-  ```
+```
 + `create_snRNA(...)`: creates an object of class snRNA by using, as parameters, the same slots required by the class.<br>
   Example:
-  ```
+```{r}
   ncRNA_snRNA <- create_snRNA(
     id = "ENSG00000206652",
     symbol = "RNU1-1",
@@ -312,13 +341,13 @@ This file contains functions for creating an manipulations objects.
     end = 16514285,
     strand = "-",
     sequence = "tttcatacttacctggcagg",
-    RNA_sequence = 'aaaguaug',
+    RNA_sequence = RNAString('aaaguaug'),
     transcript_id = "ENST00000383925.1",
     snRNA_class = 'U1')
-  ```
+```
 + `create_miRNA(...)`: creates an object of class miRNA by using, as parameters, the same slots required by the class.<br>
   Example:
-  ```
+```{r}
   miRNA125a <- create_miRNA(
     id = "ENSG00000208008",
     symbol = "MIR125A",
@@ -332,12 +361,12 @@ This file contains functions for creating an manipulations objects.
     sequence = "ACGTACCGTCAAA",
     transcript_id = "ENST00000385273.1",
     type = 'miRNA',
-    RNA_sequence = "UGCCAGUCUC",
+    RNA_sequence = RNAString("UGCCAGUCUC"),
     target_genes = c("ENSG00000141736", "ENSG00000065361"),
     seed = 'GAGUCCC',
     mature_sequence = "ucccugagacccuuuaaccuguga")
   miRNA125a
-  ```
+```
 #### Modify information of a Gene object (update its class, access and update the slots)
 
 + `transformClass(object, target_class, additional_fields)`: Converts an object of a parent class (e.g., Gene) into an object of a subclass (e.g., ProteinCodingGene, tRNA). The key parameters are:
@@ -347,7 +376,7 @@ This file contains functions for creating an manipulations objects.
   - `additional_fields`, list of additional fields required by the subclass. It is possible to go from Gene to ProteinCodingGene or ncRNA, from ncRNA to miRNA, rRNA, tRNA or snRNA and from Gene to one of the subclasses of ncRNA. When jumping from Gene to one of the subclasses of ncRNA (skipping the intermediate step on ncRNA), it is important to remember the necessary field required by ncRNA ("type") too, in addition to the subclasses-specific fields. <br>
 
   Example:
-  ```
+```{r}
   ncRNA <- create_ncRNA(
     id = "ENSG00000210049.1",
     name = "Mitochondrial tRNA phenylalanine",
@@ -362,57 +391,85 @@ This file contains functions for creating an manipulations objects.
   
   tRNA <- transformClass(ncRNA, "tRNA", list(aminoacid = "phenylalanine", anticodon = "GAA"))
   tRNA
-  ```
+```
   or, using the miRNA example seen before, we can simply add the remaining fields as:
-  ```
-  # using the 'ncRNA_miRNA' object, an object of class ncRNA created for the miRNA 125a.
+```{r}
+ncRNA_miRNA <- create_ncRNA(
+    id = "ENSG00000208008",
+    symbol = "MIR125A",
+    name = "microRNA 125a",
+    description = "MIR125A (MicroRNA 125a) is an RNA Gene, and is affiliated with the miRNA class. Diseases associated with MIR125A include Medulloblastoma and Lung Cancer.",
+    assembly = "hg38",
+    chromosome = "chr19",
+    start = 51693254,
+    end = 51693339,
+    strand = "+",
+    sequence = "ACGTACCGTCAAA",
+    transcript_id = "ENST00000385273.1",
+    type = 'miRNA',
+    RNA_sequence = RNAString("UGCCAGUCUC"))
+  ncRNA_miRNA
   
-  miRNA125a <- transformClass(ncRNA_miRNA, 
-                              "miRNA", 
-                              list(target_genes = ("ENSG00000141736", "ENSG00000065361"),
-                                                    seed = 'GAGUCCC',
-                                                    mature_sequence = "ucccugagacccuuuaaccuguga"))
-  ```
+miRNA125a <- transformClass(ncRNA_miRNA, "miRNA",
+                            list(target_genes = c("ENSG00000141736", "ENSG00000065361"),
+                                 seed = 'GAGUCCC',
+                                 mature_sequence = RNAString("ucccugagacccuuuaaccuguga")))
+```
 + `get_slot(object, slot_name)`: Get a slot value without directly having to access it with `object@slot`. The parameters are:
 
   - `object`, an instance of the class Gene or its derivates;<br>
   - `slot_name`, name of the slot to access.<br>
   Example:
-  ```
+```{r}
   # Access the mature sequence of a miRNA
-  get_slot(my_object, 'mature_sequence')
-  ```
+  # get_slot(my_object, 'mature_sequence')
+```
 + `set_slot(object, slot_name, value)`: Set a new value for a slot without directly having to access it. The first two parameters are the same as `value`, takes as argument the new updated value for the object's slot. It returns the updated <br>
   Example:
-  ```
+```{r}
   # Changing phenylalanine notation for the object tRNA created before.
+
+tRNA <- create_tRNA(
+    id = "ENSG00000210049.1",
+    name = "Mitochondrial tRNA phenylalanine",
+    assembly = "hg38",
+    chromosome = "chrM",
+    start = 577,
+    end = 647,
+    strand = "+",
+    transcript_id = "ENST00000387314.1",
+    type = "tRNA",
+    aminoacid = "phenylalanine", 
+    anticodon = "GAA"
+  )
+
   get_slot(tRNA, 'aminoacid')
-  > phenylalanine
+  # phenylalanine
   
   tRNA <- set_slot(tRNA, 'aminoacid', 'Phe')
   
   get_slot(tRNA, 'aminoacid')
-  > Phe
-  ```
+  # Phe
+```
 
 ### 3. general_package_functions.R
 This file contains functions with different goals: they can either gather or convert information for the creation of Gene objects, validate chromosomic coordinates and visualize the Gene objects.
 
 + `readFasta(filepath)`: this function lets the user provide a path to a file fasta, and automatically converts its content in a Biostring::DNAString object, compatible with the `sequence` slot of any `Gene` object. The parameter `filepath` needs to be a string containing the full path or, if the file is present at the current working directory, just the file name.<br>
   Example:
-  ```
+```{r}
   # Case 1: file on the same working directory
   
   # Case 1.1: Explicitly provide the working directory (optional)
-  path <- file.path(getwd(), "my_file.fa") 
-  sequence <- readFasta(path)
+  # path <- file.path(getwd(), "my_file.fa") 
+  # sequence <- readFasta(path)
   
   # Case 1.2: Provide only the file name
-  sequence <- readFasta("my_file.fa")
+  # sequence <- readFasta("my_file.fa")
   
   # Case 2: File located in another directory
-  sequence <- readFasta("C:/Users/<user>/Download/my_file.fa")
-  ```
+  # sequence <- readFasta("C:/Users/<user>/Download/my_file.fa")
+```
 
 + `validateGeneInputs(start, end, strand, sequence = NA)`: this function validates the genomic coordinates and the sequence of a `Gene` object. It can also convert a provided sequence in the correct format (Biostring::DNAString) if it's provided as a string, a path or a fasta file in the R environment, and returns the sequence object.<br>
 Since the `sequence` slot is not mandatory in any instances of class `Gene`, it supports the case in which no sequence is provided, by returning `NA`. Instead, it will return an error if:<br>
@@ -422,57 +479,57 @@ Since the `sequence` slot is not mandatory in any instances of class `Gene`, it 
   - `sequence` is not provided in any of the allowed formats (`NA`, a string, a path or a fasta file loaded as an object in the R environment).
   This function is also called everytime a new object of class `Gene` is created. <br>
   Example of completely invalid parameters:
-  ```
-  validateGeneInputs(234, 122, 'Sova', 89919)
-  ```
+```{r}
+  # validateGeneInputs(234, 122, 'Sova', 89919)
+```
   Example of valid parameters, taking the sequence from a file in the current working directory:
-  ```
-  validateGeneInputs(123, 344, '+', 'my_fasta_file.fa')
-  ```
+```{r}
+  # validateGeneInputs(123, 344, '+', 'my_fasta_file.fa')
+```
 + `importGeneFromEnsembl(ensembl_id, mart = NULL)`: this function uses the `biomaRt` package to download information on the gene with a specific `ensembl_id` from the ENSEMBL database, and returns an object of class `Gene`. The parameter `mart` establishes a connection with the biomaRT database to interact with ENSEMBL data from the most recent assembly (hg38): when not specified, the function creates a mart object like this:<br>
-  ```
+```{r}
   mart <- biomaRt::useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
-  ```
+```
   Example to download information about the gene CA10:
-  ```
-  > importGeneFromEnsembl("ENSG00000154975")
-  An object of class "Gene"
-  Slot "id":
-  [1] "ENSG00000154975"
+```{r}
+  importGeneFromEnsembl("ENSG00000154975")
+  # An object of class "Gene"
+  # Slot "id":
+  # [1] "ENSG00000154975"
   
-  Slot "symbol":
-  [1] "CA10"
+  # Slot "symbol":
+  # [1] "CA10"
   
-  Slot "name":
-  [1] NA
+  # Slot "name":
+  # [1] NA
   
-  Slot "description":
-  [1] "carbonic anhydrase 10 [Source:HGNC Symbol;Acc:HGNC:1369]"
+  # Slot "description":
+  # [1] "carbonic anhydrase 10 [Source:HGNC Symbol;Acc:HGNC:1369]"
   
-  Slot "assembly":
-  [1] "hg38"
+  # Slot "assembly":
+  # [1] "hg38"
   
-  Slot "chromosome":
-  [1] "chr17"
+  # Slot "chromosome":
+  # [1] "chr17"
   
-  Slot "start":
-  [1] 51630313
+  # Slot "start":
+  # [1] 51630313
   
-  Slot "end":
-  [1] 52160017
+  # Slot "end":
+  # [1] 52160017
   
-  Slot "strand":
-  [1] "-"
+  # Slot "strand":
+  # [1] "-"
   
-  Slot "sequence":
-  0-letter DNAString object
-  seq: 
-  ```
+  # Slot "sequence":
+  # 0-letter DNAString object
+  # seq: 
+```
 
 + `visualizeGene(gene, ideogram = NA)`: this function uses package `Gviz` to visualize genetic coordinates an object of class `gene`. If an object of class `ProteinCodingGene` is provided, it also shows the exons' track underneath the gene one.<br>
   If parameter `ideogram` is set to anything different than `NA`, the package downloads information about chromosomes' length: it can take some time, depending on the user internet connection.<br>
   Example:
-  ```
+```{r}
   exons <- GRanges(
   seqnames = Rle(c("chr2")),
   ranges = IRanges(end = c(130181602, 130176637, 130175000, 130173656, 130173354, 
@@ -501,7 +558,7 @@ Since the `sequence` slot is not mandatory in any instances of class `Gene`, it 
   
   
   visualizeGene(SMPD4, ideogram = "yes")
-  ```
+```
   <img src="inst/images/display_gene.png" alt="logo" style="width:800px; height:auto; display:block; margin:auto;">
 
 + `lengthProduct(object)`: this function returns the length of the genetic product of an object of class `Gene`. The definition of genetic product differs from subclass to subclass:
@@ -511,22 +568,20 @@ Since the `sequence` slot is not mandatory in any instances of class `Gene`, it 
   - miRNA: if the `mature_sequence` is provided, the function returns its length, if not it returns the length of the gene itself;<br>
   - all remaining ncRNA classes: returns the length of the gene itself.<br>
   Example:
-  ```
+```{r}
   # Example with a Protein Coding Gene
   class(SMPD4)
-  > "ProteinCodingGene"
-  sum(width(get_slot(SMPD4, "exons")))
-  > 3747
+  # "ProteinCodingGene"
   lengthProduct(SMPD4)
-  > 1249
+  
   # Example with a miRNA
   class(miRNA125a)
-  > "miRNA"
+  # "miRNA"
   length(get_slot(miRNA125a, "mature_sequence"))
-  > 24
+  # 24
   lengthProduct(miRNA125a)
-  > 24
-  ```
+  # 24
+```
 
 ## **License**
 MIT License
@@ -541,3 +596,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+```{r}
+sessionInfo()
+```

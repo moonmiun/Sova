@@ -145,6 +145,23 @@ transformClass <- function(object, target_class, additional_fields = list()) {
 #' @param protein_name Protein name (preferably from UniprotKB).
 #' @param protein_sequence The aminoacids sequence.
 #' @return A ProteinCodingGene object.
+#' @examples
+#' # gene <- createProteinCodingGene(
+#' # id = "ENSG00000139618.19",
+#' # symbol = "BRCA2",
+#' # name = "BRCA2 DNA repair associated",
+#' # description = "Plays a role in DNA repair...",
+#' # assembly = "hg38",
+#' # chromosome = "chr13",
+#' # start = 32315508,
+#' # end = 32400268,
+#' # strand = "+",
+#' # sequence = "ACGTACCGTCAAA...",
+#' # transcirpt_id = "ENST00000544455.6",
+#' # exons = exons,                    # A Granges() object defined previously
+#' # protein_id = "P51587",
+#' # protein_name = "Breast cancer type 2 susceptibility protein",
+#' # protein_sequence = "mpigskerptffeifktrcn....")
 #' @export
 createProteinCodingGene <- function(id, symbol = NA_character_,
                                     name = NA_character_,
@@ -193,7 +210,25 @@ createProteinCodingGene <- function(id, symbol = NA_character_,
 #' Transcript ID or RefSeq ID)
 #' @param type Type of the non-coding RNA ('lncRNA', 'siRNA','rRNA', 'tRNA'...)
 #' @param RNA_sequence RNA sequence.
-#' @return A NonCodingRNA object.
+#' @return A Non Coding RNA (ncRNA) object.
+#' @examples
+#' # ncRNA_miRNA <- create_ncRNA(
+#' # id = "ENSG00000208008",
+#' # symbol = "MIR125A",
+#' # name = "microRNA 125a",
+#' # description = "MIR125A (MicroRNA 125a) is an RNA Gene, and is affiliated
+#' # with the miRNA class. Diseases associated with MIR125A include
+#' # Medulloblastoma and Lung Cancer.",
+#' # assembly = "hg38",
+#' # chromosome = "chr19",
+#' # start = 51693254,
+#' # end = 51693339,
+#' # strand = "+",
+#' # sequence = "ACGTACCGTCAAA...",
+#' # transcript_id = "ENST00000385273.1",
+#' # type = 'miRNA',
+#' # RNA_sequence = "UGCCAGUCUC....")
+#'
 #' @export
 create_ncRNA <- function(id, symbol = NA_character_, name = NA_character_,
                          description = NA_character_, assembly, chromosome,
@@ -238,6 +273,27 @@ create_ncRNA <- function(id, symbol = NA_character_, name = NA_character_,
 #' @param mature_sequence Mature sequence of the miRNA (usally around 22
 #' nucleotides).
 #' @return A miRNA object.
+#' @examples
+#' # miRNA125a <- create_miRNA(
+#' # id = "ENSG00000208008",
+#' # symbol = "MIR125A",
+#' # name = "microRNA 125a",
+#' # description = "MIR125A (MicroRNA 125a) is an RNA Gene, and is affiliated
+#' # with the miRNA class. Diseases associated with MIR125A include
+#' # Medulloblastoma and Lung Cancer.",
+#' # assembly = "hg38",
+#' # chromosome = "chr19",
+#' # start = 51693254,
+#' # end = 51693339,
+#' # strand = "+",
+#' # sequence = "ACGTACCGTCAAA",
+#' # transcript_id = "ENST00000385273.1",
+#' # type = 'miRNA',
+#' # RNA_sequence = "UGCCAGUCUC",
+#' # target_genes = c("ENSG00000141736", "ENSG00000065361"),
+#' # seed = 'GAGUCCC',
+#' # mature_sequence = "ucccugagacccuuuaaccuguga")
+#'
 #' @export
 create_miRNA <- function(id, symbol = NA_character_, name = NA_character_,
                          description = NA_character_, assembly, chromosome,
@@ -294,6 +350,19 @@ create_miRNA <- function(id, symbol = NA_character_, name = NA_character_,
 #' full name, or 1-3 letters code notation).
 #' @param anticodon Anticodon contained in the tRNA (rom 5' to 3').
 #' @return An object of class tRNA
+#' @examples
+#' # ncRNA_tRNA_Phe <- create_tRNA(
+#' # id = "ENSG00000210049.1",
+#' # name = "Mitochondrial tRNA phenylalanine",
+#' # assembly = "hg38",
+#' # chromosome = "chrM",
+#' # start = 577,
+#' # end = 647,
+#' # strand = "+",
+#' # transcript_id = "ENST00000387314.1",
+#' # type = "tRNA",
+#' # aminoacid = "phenylalanine",
+#' # anticodon = "GAA")
 #' @export
 create_tRNA <- function(id, symbol = NA_character_, name = NA_character_,
                         description = NA_character_, assembly, chromosome,
@@ -340,6 +409,23 @@ create_tRNA <- function(id, symbol = NA_character_, name = NA_character_,
 #' "5S", "5.8S".
 #' @param ribosomal_subunit In which subunit of the ribosome the rRNA is found.
 #' @return An object of class rRNA
+#' @examples
+#' # rRNA_18s <- create_rRNA(
+#' # id = "ENSG00000225840",
+#' # symbol = "RNA18SN5",
+#' # name = "RNA, 18S ribosomal pseudogene",
+#' # description = "45S ribosomal DNA (rDNA) arrays, or clusters,
+#' # are present on human chromosomes 13, 14, 15...",
+#' # assembly = "hg19",
+#' # chromosome = "chrY",
+#' # start = 10197256,
+#' # end = 10199103,
+#' # strand = "-",
+#' # transcript_id = "ENST00000445125.2",
+#' # type = "tRNA",
+#' # rRNA_type = "18S",
+#' # ribosomal_subunit = "40S")
+#'
 #' @export
 create_rRNA <- function(id, symbol = NA_character_, name = NA_character_,
                         description = NA_character_, assembly, chromosome,
@@ -390,6 +476,22 @@ create_rRNA <- function(id, symbol = NA_character_, name = NA_character_,
 #' @param associated_proteins A list of the ID of the proteins that the snRNA
 #' interacts with.
 #' @return An object of class snRNA
+#' @examples
+#' # ncRNA_snRNA <- create_snRNA(
+#' # id = "ENSG00000206652",
+#' # symbol = "RNU1-1",
+#' # name = "RNA, U1 small nuclear 1",
+#' # description = "",
+#' # assembly = "hg38",
+#' # chromosome = "chr1",
+#' # start = 16514122,
+#' # end = 16514285,
+#' # strand = "-",
+#' # sequence = "tttcatacttacctggcagg",
+#' # RNA_sequence = 'aaaguaug',
+#' # transcript_id = "ENST00000383925.1",
+#' # snRNA_class = 'U1')
+#'
 #' @export
 create_snRNA <- function(id, symbol = NA_character_, name = NA_character_,
                          description = NA_character_, assembly, chromosome,
@@ -456,6 +558,10 @@ get_slot <- function(object, slot_name) {
 #' @param slot_name Name of the slot.
 #' @param value The new value to assign to the slot.
 #' @return The updated object.
+#' @examples
+#' # Changing phenylalanine notation for the object tRNA created before.
+#' # tRNA <- set_slot(tRNA, 'aminoacid', 'Phe')
+#'
 #' @export
 set_slot <- function(object, slot_name, value) {
   if (!is(object, "Gene")) stop("The object needs to inherit class 'Gene'.")

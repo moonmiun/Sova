@@ -49,8 +49,27 @@ Transcript ID or RefSeq ID)}
 \item{RNA_sequence}{RNA sequence.}
 }
 \value{
-A NonCodingRNA object.
+A Non Coding RNA (ncRNA) object.
 }
 \description{
 This function creates an instance of the NonCodingRNA class.
+}
+\examples{
+# ncRNA_miRNA <- create_ncRNA(
+# id = "ENSG00000208008",
+# symbol = "MIR125A",
+# name = "microRNA 125a",
+# description = "MIR125A (MicroRNA 125a) is an RNA Gene, and is affiliated
+# with the miRNA class. Diseases associated with MIR125A include
+# Medulloblastoma and Lung Cancer.",
+# assembly = "hg38",
+# chromosome = "chr19",
+# start = 51693254,
+# end = 51693339,
+# strand = "+",
+# sequence = "ACGTACCGTCAAA...",
+# transcript_id = "ENST00000385273.1",
+# type = 'miRNA',
+# RNA_sequence = "UGCCAGUCUC....")
+
 }

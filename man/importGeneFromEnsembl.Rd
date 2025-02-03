@@ -19,3 +19,7 @@ An object of class Gene.
 This function imports gene information from ENSEMBL (assembly: GRCh38) and
 returns an object of class Gene.
 }
+\examples{
+# importGeneFromEnsembl("ENSG00000154975")
+
+}

@@ -61,3 +61,21 @@ An object of class rRNA
 \description{
 Creates an object of class rRNA with the specified parameters
 }
+\examples{
+# rRNA_18s <- create_rRNA(
+# id = "ENSG00000225840",
+# symbol = "RNA18SN5",
+# name = "RNA, 18S ribosomal pseudogene",
+# description = "45S ribosomal DNA (rDNA) arrays, or clusters,
+# are present on human chromosomes 13, 14, 15...",
+# assembly = "hg19",
+# chromosome = "chrY",
+# start = 10197256,
+# end = 10199103,
+# strand = "-",
+# transcript_id = "ENST00000445125.2",
+# type = "tRNA",
+# rRNA_type = "18S",
+# ribosomal_subunit = "40S")
+
+}

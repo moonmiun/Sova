@@ -54,58 +54,32 @@ readFasta <- function(filepath) {
 #' @param sequence The DNA sequence (given as string, DNAString object, FASTA
 #' file or path containing a FASTA file.)
 #' @return A DNAString object
+#' @examples
+#' # validateGeneInputs(123, 344, '+', 'my_fasta_file.fa')
+#'
 #' @export
 validateGeneInputs <- function(start, end, strand,
                                sequence = Biostrings::DNAString("")) {
-  if (inherits(sequence, "DNAString")) {
-    return(sequence)
-  }
-  if (is.na(sequence)) {
-    # Case 0: No sequence was provided, return NA or handle accordingly.
-    return(Biostrings::DNAString(""))
-  }
-  if (is.character(sequence)) {
-    # Case 1 : a string element was given.
-    # Verifying if it's a valid sequence of DNA...
-    tryCatch({
-      sequence <- Biostrings::DNAString(sequence)
-    }, error = function(e) {
-      # If it's not a valid sequence, checks if it's a path to a FASTA file
+  if (inherits(sequence, "DNAString")) {return(sequence)}
+  if (is.na(sequence)) {return(Biostrings::DNAString(""))}
+  if (is.character(sequence)) { tryCatch({
+      sequence <- Biostrings::DNAString(sequence)}, error = function(e) {
       if (file.exists(sequence) && grepl("\\.fasta$", sequence,
                                          ignore.case = TRUE)) {
-        sequence <- readFasta(sequence)
-      } else {
+        sequence <- readFasta(sequence)} else {
         stop("Invalid input: the string is neither a valid DNA sequence nor a
-             valid FASTA file path.")
-      }
-    })
-  } else if (inherits(sequence, "connection")) {
-    # Case 2: the fasta was opened in the RStudio environment.
-    # Reads the file line by line
-    lines <- readLines(sequence)
-
-    # Removes the FASTA header
+             valid FASTA file path.")}})
+  } else if (inherits(sequence, "connection")) {lines <- readLines(sequence)
     header <- lines[1]
     if (!startsWith(header, ">")) {
       stop("The file doesn't have a valid FASTA header.")
     }
-
-    # Combines all of the lines in a single sequence.
     sequence <- paste(lines[-1], collapse = "")
-
-    # Removes empty spaces
     sequence <- gsub("\\s+", "", sequence)
-
-    # Converts it in a Biostrings::DNAstring element
     sequence <- Biostrings::DNAString(sequence)
-
   } else if (!inherits(sequence, "DNAString")) {
-    # Case 4: the content is not in any valid form.
     stop("Invalid input: must be a DNA sequence string, a DNAString object, a
-         valid FASTA file path, or loaded FASTA content.")
-  }
-
-  # Validation of other parameters.
+         valid FASTA file path, or loaded FASTA content.")}
   if (start < 0 || end < 0) stop("Start and end positions must be
                                  non-negative.")
   if (start > end) stop("Start position must be less than or equal to end
@@ -125,6 +99,9 @@ validateGeneInputs <- function(start, end, strand,
 #' @param mart An object of type Mart from package biomaRT. It establishes a
 #' connection with the biomaRT database to interact with ENSEMBL data.
 #' @return An object of class Gene.
+#' @examples
+#' # importGeneFromEnsembl("ENSG00000154975")
+#'
 #' @export
 importGeneFromEnsembl <- function(ensembl_id, mart = NULL) {
   # The default for mart is NULL: if it's not given by the user, the function
@@ -176,90 +153,49 @@ importGeneFromEnsembl <- function(ensembl_id, mart = NULL) {
 #' ideogram of the current chromosome. It requires internet connection and
 #' it might require some time.
 #' @return A Gviz visualization of the gene object.
+#' @examples
+#' # visualizeGene(SMPD4, ideogram = "yes")
+#'
 #' @export
 visualizeGene <- function(gene, ideogram = NA) {
   if (!inherits(gene, "Gene")) {
-    stop("The object provided is not a valid Gene object.")
-  }
-
-  # Check for subclass (ProteinCodingGene or ncRNA) and uses transcript_id if
-  # available
+    stop("The object provided is not a valid Gene object.")}
   if (inherits(gene, "ProteinCodingGene") || inherits(gene, "ncRNA")) {
-    # Use transcript_id if it's available, otherwise fallback to gene@id
     transcript <- ifelse(!is.null(gene@transcript_id) &&
                            gene@transcript_id != "", gene@transcript_id,
                          gene@id)
   } else {
-    # Default case, just use gene@id
-    transcript <- gene@id
-  }
-
-  gene_range = GRanges(
+    transcript <- gene@id}
+  gene_range <- GRanges(
     seqnames = Rle(c(gene@chromosome)),
-    ranges = IRanges(start = c(gene@start),
-                     end = c(gene@end)),
+    ranges = IRanges(start = c(gene@start), end = c(gene@end)),
     strand = Rle(c(gene@strand)))
-  # Uses the function already implemented in Gviz
   geneTrack <- GeneRegionTrack(
-    range = gene_range,
-    genome = gene@assembly,
-    chromosome = gene@chromosome,
-    strand = gene@strand,
-    transcript = transcript,
-    name = "Gene",
-    col = "grey",
-    fill = "grey",
-    lwd = 1
-  )
-
+    range = gene_range, genome = gene@assembly, chromosome = gene@chromosome,
+    strand = gene@strand, transcript = transcript, name = "Gene", col = "grey",
+    fill = "grey", lwd = 1)
   if (inherits(gene, "ProteinCodingGene")) {
-    exonTrack <- AnnotationTrack(
-      range = gene@exons,
-      name = "Exons",
-      genome = gene@assembly,
-      col = "black",
-      fill = "grey",
-      lwd = 1
-    )
-  }
-
-
-
-  # Ensure it doesn't go below 0
+    exonTrack <- AnnotationTrack( range = gene@exons, name = "Exons",
+      genome = gene@assembly, col = "black", fill = "grey", lwd = 1)}
   start_position <- max(gene@start - 1000, 0)
   end_position <- gene@end + 1000
-
   gtrack <- GenomeAxisTrack()
-
   if (!is.na(ideogram)) {
     itrack <- IdeogramTrack(genome = gene@assembly,
                             chromosome = gene@chromosome)
     if (inherits(gene, "ProteinCodingGene")){
       return(plotTracks(list(itrack, gtrack, geneTrack, exonTrack),
                         from = start_position, to = end_position,
-                        main = paste("Gene:", transcript))
-      )
-    }
+                        main = paste("Gene:", transcript)))}
     else {
       return(plotTracks(list(itrack, gtrack, geneTrack), from = start_position,
-                        to = end_position,
-                        main = paste("Gene:", transcript)))
-    }
-  }
-
-  # Visualize the Gene
+                        to = end_position, main = paste("Gene:", transcript)))}}
   if (inherits(gene, "ProteinCodingGene")){
     return(plotTracks(list(geneTrack, gtrack, exonTrack), from = start_position,
-                      to = end_position,
-                      main = paste("Gene:", transcript))
-    )
-  }
+                      to = end_position, main = paste("Gene:", transcript)))}
   else {
     return(plotTracks(list(gtrack, geneTrack), from = start_position,
-                      to = end_position,
-                      main = paste("Gene:", transcript)))
-  }
-}
+                      to = end_position, main = paste("Gene:", transcript)))}}
 
 
 
@@ -271,6 +207,9 @@ visualizeGene <- function(gene, ideogram = NA) {
 #'
 #' @param object Object of class Gene and its derivates.
 #' @return The length of the genetic product.
+#' @examples
+#' # lengthProduct(SMPD4)
+#'
 #' @export
 setGeneric("lengthProduct", function(object) standardGeneric("lengthProduct"))
 

@@ -24,3 +24,7 @@ This function validates the input sequence and chromosome coordinates.
 The sequence is returned as a DNAString (from Biostrings) if it complies
 with the conditions.
 }
+\examples{
+# validateGeneInputs(123, 344, '+', 'my_fasta_file.fa')
+
+}

@@ -20,3 +20,7 @@ A Gviz visualization of the gene object.
 This function lets the user visualize an object of class Gene in a more
 user-friendly manner.
 }
+\examples{
+# visualizeGene(SMPD4, ideogram = "yes")
+
+}

@@ -29,6 +29,8 @@ Calculates the length of the genetic product of each class. What is the
 genetic product differs from class to class.
 }
 \examples{
+# lengthProduct(SMPD4)
+
 # Class Object
 # This is the case in which there is no information about the gene so the
 # genetic product is the length of its RNA transcription.

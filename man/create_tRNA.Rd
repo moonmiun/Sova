@@ -61,3 +61,17 @@ An object of class tRNA
 \description{
 Creates an object of class tRNA with the specified parameters
 }
+\examples{
+# ncRNA_tRNA_Phe <- create_tRNA(
+# id = "ENSG00000210049.1",
+# name = "Mitochondrial tRNA phenylalanine",
+# assembly = "hg38",
+# chromosome = "chrM",
+# start = 577,
+# end = 647,
+# strand = "+",
+# transcript_id = "ENST00000387314.1",
+# type = "tRNA",
+# aminoacid = "phenylalanine",
+# anticodon = "GAA")
+}

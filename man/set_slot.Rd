@@ -20,3 +20,8 @@ The updated object.
 Set a slot value without directly having to access it; the value can be
 either added or edited.
 }
+\examples{
+# Changing phenylalanine notation for the object tRNA created before.
+# tRNA <- set_slot(tRNA, 'aminoacid', 'Phe')
+
+}

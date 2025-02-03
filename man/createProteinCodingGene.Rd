@@ -61,3 +61,21 @@ A ProteinCodingGene object.
 \description{
 This function creates an instance of the ProteinCodingGene class.
 }
+\examples{
+# gene <- createProteinCodingGene(
+# id = "ENSG00000139618.19",
+# symbol = "BRCA2",
+# name = "BRCA2 DNA repair associated",
+# description = "Plays a role in DNA repair...",
+# assembly = "hg38",
+# chromosome = "chr13",
+# start = 32315508,
+# end = 32400268,
+# strand = "+",
+# sequence = "ACGTACCGTCAAA...",
+# transcirpt_id = "ENST00000544455.6",
+# exons = exons,                    # A Granges() object defined previously
+# protein_id = "P51587",
+# protein_name = "Breast cancer type 2 susceptibility protein",
+# protein_sequence = "mpigskerptffeifktrcn....")
+}

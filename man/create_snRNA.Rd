@@ -66,3 +66,20 @@ An object of class snRNA
 \description{
 Creates an object of class snRNA with the specified parameters
 }
+\examples{
+# ncRNA_snRNA <- create_snRNA(
+# id = "ENSG00000206652",
+# symbol = "RNU1-1",
+# name = "RNA, U1 small nuclear 1",
+# description = "",
+# assembly = "hg38",
+# chromosome = "chr1",
+# start = 16514122,
+# end = 16514285,
+# strand = "-",
+# sequence = "tttcatacttacctggcagg",
+# RNA_sequence = 'aaaguaug',
+# transcript_id = "ENST00000383925.1",
+# snRNA_class = 'U1')
+
+}

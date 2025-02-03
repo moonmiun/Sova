@@ -182,11 +182,13 @@ setValidity("ncRNA", function(object) {
 #' # nucleotides.
 #'
 #' # Mature sequence
-#' # The generation of miRNAs is a multistage process. Briefly, the mature ∼22 nt
+#' # The generation of miRNAs is a multistage process. Briefly, the mature
+#' # ∼22 nt
 #' # miRNA sequence is embedded in one strand of an ∼33 bp double-stranded stem
 #' # characteristic of hairpin structures
 #' # in primary miRNA (pri-miRNA) transcripts produced by RNA polymerase II or
-#' # III. The miRNA must therefore be excised during its biogenesis to elicit gene
+#' # III. The miRNA must therefore be excised during its biogenesis to elicit
+#' # gene
 #' #  silencing. To quickly find the mature sequence of the miRNA, the user can
 #' #  check this database: https://mirbase.org/.
 #' @export
@@ -271,7 +273,8 @@ setValidity("tRNA", function(object) {
 #' @examples
 #' # Ribosomal subunit
 #' # A ribosome is composed by a small and a big subunit. For prokaryotes the
-#' # small subunit is denoted as 30S and the big one as 50S, while for eukaryotes
+#' # small subunit is denoted as 30S and the big one as 50S, while for
+#' # eukaryotes
 #' # the former is 40S and the latter is 60S.
 #' @export
 setClass(

@@ -2,14 +2,13 @@ Package: Sova
 Type: Package
 Title: A package for Gene types
 Version: 1.0.0
-Author: Flavia Leotta
-Maintainer: Flavia Leotta <flavia.leotta@hotmail.com>
+Authors@R: person(given = "Flavia", family = "Leotta", email = "flavia.leotta@hotmail.com", role = c("aut", "cre"))
 Description: This package provides a set of S4 classes for different gene types (e.g., protein-coding genes, non-coding RNA genes, microRNA genes, ...) inherited from a virtual Gene class.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Depends: R(>= 4.0.0)
+Depends: R(>= 4.4.0)
 Imports:
     methods,
     Gviz,
@@ -19,5 +18,9 @@ Imports:
     S4Vectors,
     Biostrings
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr
+biocViews: Genetics, Software
